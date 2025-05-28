@@ -3,7 +3,7 @@ const path = require('path')
 
 const TASKS_FILE_PATH = path.join(process.cwd(), 'tasks.json')
 
-const readTasks = () => {
+function readTasks(){
   if(!fs.existsSync(TASKS_FILE_PATH)){
     fs.writeFileSync(TASKS_FILE_PATH, JSON.stringify([], null, 2), 'utf8')
     return []
@@ -12,8 +12,10 @@ const readTasks = () => {
   return JSON.parse(data)
 }
 
-const writeTasks = (tasks) => {
-  fs.writeFileSync(TASK_FILE_PATH, JSON.stringify(tasks, null, 2), 'utf8')
+function writeTasks(tasks){
+  fs.writeFileSync(TASKS_FILE_PATH, JSON.stringify(tasks, null, 2), 'utf8')
 }
 const tasks = readTasks()
+tasks.push({ title: "New Task", done: false });
+writeTasks(tasks);
 console.log('Task:', tasks);

@@ -1,1 +1,6 @@
-[]
+[
+  {
+    "title": "New Task",
+    "done": false
+  }
+]
