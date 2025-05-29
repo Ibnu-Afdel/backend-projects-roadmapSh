@@ -82,6 +82,34 @@ function deleteTask(idStr) {
   writeTasks(updatedTasks);
   console.log(`Task ${taskId} deleted sucessfully.`);
 }
+
+function updateTask(idStr, newDescription) {
+  if (!idStr || !newDescription || newDescription.trim() === "") {
+    console.error("Error: Missing task ID or new description");
+    return;
+  }
+
+  const taskId = parseInt(idStr, 10);
+  if (isNaN(taskId)) {
+    console.error("Error: Task ID must be a numebr.");
+    return;
+  }
+
+  const tasks = readTasks();
+  const taskIndex = tasks.findIndex((task) => task.id === taskId);
+
+  if (taskIndex === -1) {
+    console.error(`Task with ID ${taskID} not found.`);
+    return;
+  }
+
+  tasks[taskIndex].description = newDescription;
+  tasks[taskIndex].updatedAt = new Date().toISOString();
+
+  writeTasks(tasks);
+  console.log(`task ${taskId} updated sucessfully`);
+}
+
 const [, , command, ...args] = process.argv;
 if (!command) {
   console.log("please provide a command (eg. add, list)");
@@ -96,6 +124,9 @@ switch (command) {
     break;
   case "delete":
     deleteTask(args[0]);
+    break;
+  case "update":
+    updateTask(args[0], args[1]);
     break;
   default:
     console.log(`Unknown command ${command}`);
