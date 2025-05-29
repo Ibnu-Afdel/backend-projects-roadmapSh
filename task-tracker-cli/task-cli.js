@@ -37,6 +37,27 @@ function addTask(description) {
   console.log(`Task added (Id: ${newTask.id})`);
 }
 
+function listTask() {
+  const tasks = readTasks();
+
+  if (tasks.length === 0) {
+    console.log("No task found. Add one with:");
+    console.log(` node task-cli add 'my first task'`);
+    return;
+  }
+  console.log("\n Your Tasks:");
+  console.log("-------------------------------------------------------------");
+
+  console.log("ID  | Status       | Description");
+  console.log("-------------------------------------------------------------");
+
+  tasks.forEach((task) => {
+    const idStr = String(task.id).padEnd(2);
+    const statusStr = task.status.padEnd(12);
+    console.log(`${idStr}  | ${statusStr} | ${task.description}`);
+  });
+  console.log("-------------------------------------------------------------");
+}
 const [, , command, ...args] = process.argv;
 if (!command) {
   console.log("please provide a command (eg. add, list)");
@@ -47,7 +68,7 @@ switch (command) {
     addTask(args[0]);
     break;
   case "list":
-    console.log("Listing tasks...");
+    listTask();
     break;
   default:
     console.log(`Unknown command ${command}`);
