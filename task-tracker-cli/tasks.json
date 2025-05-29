@@ -2,22 +2,22 @@
   {
     "id": 1,
     "description": "dont buy anything",
-    "status": "todo",
+    "status": "done",
     "createdAt": "2025-05-29T15:15:25.868Z",
-    "updatedAt": "2025-05-29T19:23:00.717Z"
+    "updatedAt": "2025-05-29T19:57:19.740Z"
   },
   {
     "id": 2,
     "description": "buy little dog",
-    "status": "todo",
+    "status": "in-progress",
     "createdAt": "2025-05-29T15:15:46.913Z",
-    "updatedAt": "2025-05-29T15:15:46.913Z"
+    "updatedAt": "2025-05-29T19:57:51.915Z"
   },
   {
     "id": 3,
     "description": "buy",
-    "status": "completed",
+    "status": "in-progress",
     "createdAt": "2025-05-29T15:15:59.784Z",
-    "updatedAt": "2025-05-29T15:15:59.784Z"
+    "updatedAt": "2025-05-29T19:58:10.666Z"
   }
 ]

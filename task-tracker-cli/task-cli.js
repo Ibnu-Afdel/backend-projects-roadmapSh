@@ -110,6 +110,40 @@ function updateTask(idStr, newDescription) {
   console.log(`task ${taskId} updated sucessfully`);
 }
 
+function changeTaskStatus(idStr, status) {
+  if (!idStr) {
+    console.error(`Error: Missing task ID for marking as '${status}`);
+    return;
+  }
+
+  const taskId = parseInt(idStr, 10);
+  if (isNaN(taskId)) {
+    console.error("Error: Task ID must be a number");
+    return;
+  }
+
+  const tasks = readTasks();
+  const taskIndex = tasks.findIndex((task) => task.id === taskId);
+
+  if (taskIndex === -1) {
+    console.error(`Task with ID ${taskId} NOT FOUND.`);
+    return;
+  }
+
+  tasks[taskIndex].status = status;
+  tasks[taskIndex].updatedAt = new Date().toISOString();
+
+  writeTasks(tasks);
+  console.log(`Task ${taskId} marked as '${status}'`);
+}
+
+function markDone(idStr) {
+  changeTaskStatus(idStr, "done");
+}
+
+function markInProgress(idStr) {
+  changeTaskStatus(idStr, "in-progress");
+}
 const [, , command, ...args] = process.argv;
 if (!command) {
   console.log("please provide a command (eg. add, list)");
@@ -127,6 +161,12 @@ switch (command) {
     break;
   case "update":
     updateTask(args[0], args[1]);
+    break;
+  case "mark-done":
+    markDone(args[0]);
+    break;
+  case "mark-in-progress":
+    markInProgress(args[0]);
     break;
   default:
     console.log(`Unknown command ${command}`);
