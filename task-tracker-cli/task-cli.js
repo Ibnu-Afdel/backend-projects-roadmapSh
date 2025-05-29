@@ -58,6 +58,30 @@ function listTask() {
   });
   console.log("-------------------------------------------------------------");
 }
+
+function deleteTask(idStr) {
+  if (!idStr) {
+    console.error("Error: missing task id");
+    return;
+  }
+
+  const taskId = parseInt(idStr, 10);
+  if (isNaN(taskId)) {
+    console.error("Error: Task Id must be a number.");
+    return;
+  }
+
+  const tasks = readTasks();
+  const updatedTasks = tasks.filter((task) => task.id !== taskId);
+
+  if (updatedTasks.length === tasks.length) {
+    console.error(`Task with ID ${taskId} not found`);
+    return;
+  }
+
+  writeTasks(updatedTasks);
+  console.log(`Task ${taskId} deleted sucessfully.`);
+}
 const [, , command, ...args] = process.argv;
 if (!command) {
   console.log("please provide a command (eg. add, list)");
@@ -69,6 +93,9 @@ switch (command) {
     break;
   case "list":
     listTask();
+    break;
+  case "delete":
+    deleteTask(args[0]);
     break;
   default:
     console.log(`Unknown command ${command}`);
