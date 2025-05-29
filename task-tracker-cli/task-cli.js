@@ -16,6 +16,27 @@ function writeTasks(tasks) {
   fs.writeFileSync(TASKS_FILE_PATH, JSON.stringify(tasks, null, 2), "utf8");
 }
 
+function addTask(description) {
+  if (!description || description.trim() === "") {
+    console.error("Error: Task description cannot be empty");
+    return;
+  }
+  const tasks = readTasks();
+
+  const now = new Date().toISOString();
+  const newTask = {
+    id: tasks.length > 0 ? tasks[tasks.length - 1].id + 1 : 1,
+    description: description,
+    status: "todo",
+    createdAt: now,
+    updatedAt: now,
+  };
+
+  tasks.push(newTask);
+  writeTasks(tasks);
+  console.log(`Task added (Id: ${newTask.id})`);
+}
+
 const [, , command, ...args] = process.argv;
 if (!command) {
   console.log("please provide a command (eg. add, list)");
@@ -23,7 +44,7 @@ if (!command) {
 }
 switch (command) {
   case "add":
-    console.log("Adding task", args[0]);
+    addTask(args[0]);
     break;
   case "list":
     console.log("Listing tasks...");
@@ -32,11 +53,3 @@ switch (command) {
     console.log(`Unknown command ${command}`);
     break;
 }
-
-const tasks = readTasks();
-tasks.push({ title: "New Task", done: false });
-writeTasks(tasks);
-console.log("--------------------------------");
-console.log("Task:", tasks);
-console.log(process.argv);
-console.log("--------------------------------");
