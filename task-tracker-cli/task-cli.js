@@ -144,6 +144,25 @@ function markDone(idStr) {
 function markInProgress(idStr) {
   changeTaskStatus(idStr, "in-progress");
 }
+
+function listTasks(statusFilter) {
+  const tasks = readTasks();
+  let filtered = tasks;
+
+  const validStatuses = ["todo", "in-progress", "done"];
+  if (statudFilter) {
+    if (!validStatuses.includes(statusFilter)) {
+      console.error(
+        `Invalid status '${statusFilter}' . use one of: ${validStatuses.join(
+          ", "
+        )}`
+      );
+      return;
+    }
+    filtered = tasks.filter((task) => task.status === statusFilter);
+  }
+}
+
 const [, , command, ...args] = process.argv;
 if (!command) {
   console.log("please provide a command (eg. add, list)");
